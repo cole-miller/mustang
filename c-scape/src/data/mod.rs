@@ -65,10 +65,13 @@ constant!(DT_REG);
 constant!(DT_LNK);
 constant!(DT_SOCK);
 constant!(TCGETS);
+#[cfg(not(target_arch = "riscv64"))] // libc for riscv64 doesn't have max_align_t yet
 constant_same_as!(
     ALIGNOF_MAXALIGN_T,
     std::mem::align_of::<libc::max_align_t>()
 );
+#[cfg(target_arch = "riscv64")]
+constant_same_as!(ALIGNOF_MAXALIGN_T, 16);
 constant!(MAP_ANONYMOUS);
 constant_same_as!(MAP_FAILED, libc::MAP_FAILED);
 constant!(_SC_PAGESIZE);
